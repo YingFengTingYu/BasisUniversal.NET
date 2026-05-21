@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <PackageId>BasisUniversal.NET</PackageId>
+    <Version>1.0.0-preview.1</Version>
     <Description>Preview .NET wrapper for the Basis Universal GPU texture codec encoder and transcoder. Native runtime binaries are not fully distributed yet; users may need to build the native shim themselves.</Description>
     <PackageTags>basis;basis-universal;ktx2;texture-compression;gpu-textures</PackageTags>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
