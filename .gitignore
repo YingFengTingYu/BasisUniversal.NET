@@ -1,0 +1,7 @@
+bin/
+obj/
+artifacts/
+native/build*/
+runtimes/*/native/*
+*.user
+.DS_Store
