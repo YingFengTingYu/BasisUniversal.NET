@@ -4,6 +4,11 @@
 GPU texture codec. It exposes the upstream encoder/transcoder C API without
 taking a dependency on any higher-level texture library.
 
+This package is currently an early preview. Native runtime binaries are not yet
+fully distributed for every target platform, so users may need to build the
+native shim themselves and place the output in the matching NuGet runtime asset
+folder.
+
 The package is intended to be used directly by tools, asset pipelines, and
 adapter packages such as `TextureCompressor.BasisUniversal`.
 
@@ -14,9 +19,8 @@ adapter packages such as `TextureCompressor.BasisUniversal`.
 - Transcode KTX2 image levels to Basis Universal's supported target formats,
   including RGBA32, ETC, BC1-5, BC7, PVRTC, ATC, FXT1, and ASTC targets where
   the source Basis texture format supports them.
-- Native library distribution is opt-in by runtime ID. The first local build
-  produces `osx-arm64`; CI is set up to produce common Windows, Linux, and macOS
-  packages.
+- Native library distribution is still being finalized. For now, expect to
+  compile the native shim yourself for your target runtime ID.
 
 ## Example
 

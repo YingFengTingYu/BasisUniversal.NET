@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <PackageId>BasisUniversal.NET</PackageId>
-    <Description>.NET wrapper for the Basis Universal GPU texture codec encoder and transcoder.</Description>
+    <Description>Preview .NET wrapper for the Basis Universal GPU texture codec encoder and transcoder. Native runtime binaries are not fully distributed yet; users may need to build the native shim themselves.</Description>
     <PackageTags>basis;basis-universal;ktx2;texture-compression;gpu-textures</PackageTags>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
@@ -16,6 +16,7 @@
     <None Include="..\..\README.md" Pack="true" PackagePath="README.md" />
     <None Include="..\..\THIRD-PARTY-NOTICES.md" Pack="true" PackagePath="THIRD-PARTY-NOTICES.md" />
     <None Include="..\..\runtimes\**\*"
+          Exclude="..\..\runtimes\**\.DS_Store"
           Pack="true"
           PackagePath="runtimes\%(RecursiveDir)%(Filename)%(Extension)"
           CopyToOutputDirectory="PreserveNewest"
