@@ -13,9 +13,10 @@ The project is split into managed packages and native asset packages:
   the upstream C API symbols exported by the native `basisu` library.
 - `BasisUniversal.Native` is the aggregate native runtime package consumed by
   the low-level bindings.
-- `BasisUniversal.NativeAssets.Android`, `BasisUniversal.NativeAssets.iOS`, and
-  `BasisUniversal.NativeAssets.macOS` follow the SkiaSharp NativeAssets package
-  layout for platform-specific native assets.
+- `BasisUniversal.NativeAssets.Android`, `BasisUniversal.NativeAssets.iOS`,
+  `BasisUniversal.NativeAssets.Linux`, and `BasisUniversal.NativeAssets.macOS`
+  follow the SkiaSharp NativeAssets package layout for platform-specific native
+  assets.
 
 These packages are currently an early preview. Native runtime binaries are not
 yet fully distributed for every target platform, so users may need to build the
@@ -32,8 +33,8 @@ adapter packages such as `TextureCompressor.BasisUniversal`.
 - Transcode KTX2 image levels to Basis Universal's supported target formats,
   including RGBA32, ETC, BC1-5, BC7, PVRTC, ATC, FXT1, and ASTC targets where
   the source Basis texture format supports them.
-- Native assets are currently packaged for Android, iOS, and macOS. Other
-  target platforms can be added with the same package layout.
+- Native assets are currently packaged for Android, iOS, Linux, and macOS.
+  Other target platforms can be added with the same package layout.
 
 ## High-Level Example
 
@@ -160,6 +161,7 @@ dotnet test BasisUniversal.NET.slnx
 dotnet pack src/BasisUniversal.Native/BasisUniversal.Native.csproj -c Release
 dotnet pack src/BasisUniversal.NativeAssets.Android/BasisUniversal.NativeAssets.Android.csproj -c Release
 dotnet pack src/BasisUniversal.NativeAssets.iOS/BasisUniversal.NativeAssets.iOS.csproj -c Release
+dotnet pack src/BasisUniversal.NativeAssets.Linux/BasisUniversal.NativeAssets.Linux.csproj -c Release
 dotnet pack src/BasisUniversal.NativeAssets.macOS/BasisUniversal.NativeAssets.macOS.csproj -c Release
 dotnet pack src/BasisUniversal.NET.LowLevel/BasisUniversal.NET.LowLevel.csproj -c Release
 dotnet pack src/BasisUniversal.NET/BasisUniversal.NET.csproj -c Release

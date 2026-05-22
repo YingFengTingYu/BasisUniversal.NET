@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+    <PackageId>BasisUniversal.NativeAssets.Linux</PackageId>
+    <Version>1.0.0-preview.1</Version>
+    <Description>Linux native runtime binaries for the Basis Universal GPU texture codec.</Description>
+    <PackageTags>basis;basis-universal;ktx2;texture-compression;gpu-textures;native;linux</PackageTags>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <NoWarn>$(NoWarn);NU5128</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="README.md" />
+    <None Include="..\..\THIRD-PARTY-NOTICES.md" Pack="true" PackagePath="THIRD-PARTY-NOTICES.md" />
+    <None Include="lib\**\*" Pack="true" PackagePath="lib\%(RecursiveDir)%(Filename)%(Extension)" />
+    <None Include="buildTransitive\**\*" Pack="true" PackagePath="buildTransitive\%(RecursiveDir)%(Filename)%(Extension)" />
+    <None Include="..\..\runtimes\linux-arm64\native\libbasisu.so"
+          Pack="true"
+          PackagePath="runtimes\linux-arm64\native\libbasisu.so" />
+    <None Include="..\..\runtimes\linux-x64\native\libbasisu.so"
+          Pack="true"
+          PackagePath="runtimes\linux-x64\native\libbasisu.so" />
+  </ItemGroup>
+
+</Project>

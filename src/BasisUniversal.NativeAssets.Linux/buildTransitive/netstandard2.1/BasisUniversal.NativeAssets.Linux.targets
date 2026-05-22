@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <ShouldIncludeNativeBasisUniversal Condition=" '$(ShouldIncludeNativeBasisUniversal)' == '' ">True</ShouldIncludeNativeBasisUniversal>
+  </PropertyGroup>
+
+  <ItemGroup Condition=" '$(ShouldIncludeNativeBasisUniversal)' != 'False' ">
+    <_NativeBasisUniversalFile Include="$(MSBuildThisFileDirectory)..\..\runtimes\linux-x64\native\libbasisu*.so">
+      <Dir>x64\</Dir>
+    </_NativeBasisUniversalFile>
+    <_NativeBasisUniversalFile Include="$(MSBuildThisFileDirectory)..\..\runtimes\linux-arm64\native\libbasisu*.so">
+      <Dir>arm64\</Dir>
+    </_NativeBasisUniversalFile>
+
+    <Content Include="@(_NativeBasisUniversalFile)">
+      <Link>%(Dir)%(Filename)%(Extension)</Link>
+      <Visible>False</Visible>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>
