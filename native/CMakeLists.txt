@@ -43,7 +43,8 @@ if (TARGET basisu_encoder)
 endif()
 
 if (NOT MSVC)
-    target_link_libraries(basisu_native PRIVATE m pthread)
+    find_package(Threads REQUIRED)
+    target_link_libraries(basisu_native PRIVATE m Threads::Threads)
 endif()
 
 set_target_properties(basisu_native PROPERTIES
