@@ -19,14 +19,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\BasisUniversal.NET.LowLevel\BasisUniversal.NET.LowLevel.csproj" />
     <ProjectReference Include="..\..\src\BasisUniversal.NET\BasisUniversal.NET.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\..\runtimes\osx-arm64\native\libbasisu_net.dylib"
-          Condition="Exists('..\..\runtimes\osx-arm64\native\libbasisu_net.dylib')"
+    <None Include="..\..\runtimes\osx-arm64\native\libbasisu.dylib"
+          Condition="Exists('..\..\runtimes\osx-arm64\native\libbasisu.dylib')"
           CopyToOutputDirectory="PreserveNewest"
-          Link="libbasisu_net.dylib" />
+          Link="libbasisu.dylib" />
   </ItemGroup>
 
 </Project>
