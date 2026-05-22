@@ -1,3 +1,5 @@
+using System;
+
 namespace BasisUniversal;
 
 public sealed class TranscodedImage
@@ -17,4 +19,10 @@ public sealed class TranscodedImage
     public TranscoderTextureFormat Format { get; }
 
     public byte[] Data { get; }
+
+    public int SizeInBytes => Data.Length;
+
+    public ReadOnlyMemory<byte> Memory => Data;
+
+    public ReadOnlySpan<byte> Span => Data;
 }

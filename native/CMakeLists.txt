@@ -24,31 +24,30 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(basis_universal)
 
-add_library(basisu_net SHARED
-    basisu_net.cpp
+add_library(basisu_native SHARED
     ${basis_universal_SOURCE_DIR}/encoder/basisu_wasm_api.cpp
     ${basis_universal_SOURCE_DIR}/encoder/basisu_wasm_transcoder_api.cpp
 )
 
-target_include_directories(basisu_net PRIVATE
+target_include_directories(basisu_native PRIVATE
     ${basis_universal_SOURCE_DIR}
     ${basis_universal_SOURCE_DIR}/encoder
     ${basis_universal_SOURCE_DIR}/transcoder
 )
 
-target_compile_definitions(basisu_net PRIVATE BASISD_SUPPORT_KTX2_ZSTD=1)
+target_compile_definitions(basisu_native PRIVATE BASISD_SUPPORT_KTX2_ZSTD=1)
 
 if (TARGET basisu_encoder)
     target_compile_definitions(basisu_encoder PRIVATE BASISD_SUPPORT_KTX2_ZSTD=1)
-    target_link_libraries(basisu_net PRIVATE basisu_encoder)
+    target_link_libraries(basisu_native PRIVATE basisu_encoder)
 endif()
 
 if (NOT MSVC)
-    target_link_libraries(basisu_net PRIVATE m pthread)
+    target_link_libraries(basisu_native PRIVATE m pthread)
 endif()
 
-set_target_properties(basisu_net PROPERTIES
-    OUTPUT_NAME basisu_net
+set_target_properties(basisu_native PROPERTIES
+    OUTPUT_NAME basisu
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/out"
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/out"
     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/out"

@@ -1,5 +1,6 @@
 <Solution>
   <Folder Name="/src/">
+    <Project Path="src/BasisUniversal.NET.LowLevel/BasisUniversal.NET.LowLevel.csproj" />
     <Project Path="src/BasisUniversal.NET/BasisUniversal.NET.csproj" />
   </Folder>
   <Folder Name="/tests/">

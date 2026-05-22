@@ -5,10 +5,10 @@
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <PackageId>BasisUniversal.NET</PackageId>
+    <PackageId>BasisUniversal.NET.LowLevel</PackageId>
     <Version>1.0.0-preview.1</Version>
-    <Description>High-level .NET wrapper for the Basis Universal GPU texture codec encoder and transcoder.</Description>
-    <PackageTags>basis;basis-universal;ktx2;texture-compression;gpu-textures</PackageTags>
+    <Description>Low-level .NET bindings for the Basis Universal encoder and transcoder C API.</Description>
+    <PackageTags>basis;basis-universal;ktx2;texture-compression;gpu-textures;native-bindings</PackageTags>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
@@ -16,10 +16,12 @@
   <ItemGroup>
     <None Include="..\..\README.md" Pack="true" PackagePath="README.md" />
     <None Include="..\..\THIRD-PARTY-NOTICES.md" Pack="true" PackagePath="THIRD-PARTY-NOTICES.md" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\BasisUniversal.NET.LowLevel\BasisUniversal.NET.LowLevel.csproj" />
+    <None Include="..\..\runtimes\**\*"
+          Exclude="..\..\runtimes\**\.DS_Store"
+          Pack="true"
+          PackagePath="runtimes\%(RecursiveDir)%(Filename)%(Extension)"
+          CopyToOutputDirectory="PreserveNewest"
+          Link="%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
 
 </Project>

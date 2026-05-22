@@ -16,10 +16,7 @@ public sealed class BasisEncoderOptions
 
     internal void Validate()
     {
-        if ((uint)Format >= (uint)BasisTextureFormat.TotalFormats)
-        {
-            throw new ArgumentOutOfRangeException(nameof(Format), Format, "Unsupported Basis texture format.");
-        }
+        BasisUniversalCodec.ValidateBasisTextureFormat(Format, nameof(Format));
 
         if (QualityLevel < 0 || QualityLevel > 100)
         {
