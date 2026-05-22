@@ -4,22 +4,23 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <PackageId>BasisUniversal.NET.LowLevel</PackageId>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <PackageId>BasisUniversal.Native</PackageId>
     <Version>1.0.0-preview.1</Version>
-    <Description>Low-level .NET bindings for the Basis Universal encoder and transcoder C API.</Description>
-    <PackageTags>basis;basis-universal;ktx2;texture-compression;gpu-textures;native-bindings</PackageTags>
+    <Description>Native runtime binaries for the Basis Universal GPU texture codec.</Description>
+    <PackageTags>basis;basis-universal;ktx2;texture-compression;gpu-textures;native</PackageTags>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <NoWarn>$(NoWarn);NU5128</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
     <None Include="..\..\README.md" Pack="true" PackagePath="README.md" />
     <None Include="..\..\THIRD-PARTY-NOTICES.md" Pack="true" PackagePath="THIRD-PARTY-NOTICES.md" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\BasisUniversal.Native\BasisUniversal.Native.csproj" />
+    <None Include="..\..\runtimes\**\*"
+          Exclude="..\..\runtimes\**\.DS_Store"
+          Pack="true"
+          PackagePath="runtimes\%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
 
 </Project>

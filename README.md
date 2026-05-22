@@ -3,7 +3,7 @@
 `BasisUniversal.NET` is a .NET wrapper around Binomial's Basis Universal GPU
 texture codec.
 
-The project is split into two NuGet packages:
+The project is split into three NuGet packages:
 
 - `BasisUniversal.NET` provides the high-level .NET API for common encode,
   inspect, and transcode workflows.
@@ -11,9 +11,11 @@ The project is split into two NuGet packages:
   method names follow the upstream `bu_*` and `bt_*` C API shape in C#
   PascalCase, such as `BuGetVersion` and `BtKtx2Open`. It binds directly to
   the upstream C API symbols exported by the native `basisu` library.
+- `BasisUniversal.Native` carries the native runtime binaries consumed by the
+  low-level bindings.
 
-This package is currently an early preview. Native runtime binaries are not yet
-fully distributed for every target platform, so users may need to build the
+These packages are currently an early preview. Native runtime binaries are not
+yet fully distributed for every target platform, so users may need to build the
 native shim themselves and place the output in the matching NuGet runtime asset
 folder.
 
@@ -139,10 +141,19 @@ for example:
 cp native/build/out/libbasisu.dylib runtimes/osx-arm64/native/
 ```
 
+Desktop and Android native binaries can be added with the standard NuGet RID
+layout under `runtimes/{rid}/native/`, such as `runtimes/win-x64/native/`,
+`runtimes/linux-arm64/native/`, or `runtimes/android-arm64/native/`. iOS and
+browser WebAssembly are more constrained platforms and may need platform-specific
+build integration instead of a plain dynamically loaded native library. The
+native package can evolve to carry those assets or be split into platform
+packages later if that becomes cleaner.
+
 Then run:
 
 ```bash
 dotnet test BasisUniversal.NET.slnx
+dotnet pack src/BasisUniversal.Native/BasisUniversal.Native.csproj -c Release
 dotnet pack src/BasisUniversal.NET.LowLevel/BasisUniversal.NET.LowLevel.csproj -c Release
 dotnet pack src/BasisUniversal.NET/BasisUniversal.NET.csproj -c Release
 ```
