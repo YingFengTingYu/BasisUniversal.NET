@@ -138,11 +138,10 @@ cmake -S native -B native/build -DCMAKE_BUILD_TYPE=Release
 cmake --build native/build --config Release --target basisu_native
 ```
 
-Copy the produced native library into the matching NuGet runtime asset folder,
-for example:
+For repeatable builds, use the native build script:
 
 ```bash
-cp native/build/out/libbasisu.dylib runtimes/osx/native/
+scripts/build-native.sh macos ios android linux
 ```
 
 Desktop and Android native binaries use the standard NuGet RID layout under
@@ -153,6 +152,10 @@ approach and packages signed frameworks under `runtimes/ios/native/` and
 `runtimes/iossimulator/native/`. Browser WebAssembly will need its own package
 shape because it is linked by the WebAssembly build toolchain rather than loaded
 as a normal native library.
+
+The Linux target uses Docker manylinux2014 images to produce `linux-x64` and
+`linux-arm64` binaries. The Android target uses the local Android NDK discovered
+from `ANDROID_NDK_HOME`, `ANDROID_NDK_ROOT`, or `ANDROID_HOME`.
 
 Then run:
 
