@@ -24,8 +24,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\..\runtimes\osx-arm64\native\libbasisu.dylib"
-          Condition="Exists('..\..\runtimes\osx-arm64\native\libbasisu.dylib')"
+    <None Include="..\..\runtimes\osx\native\libbasisu.dylib"
+          Condition="Exists('..\..\runtimes\osx\native\libbasisu.dylib')"
           CopyToOutputDirectory="PreserveNewest"
           Link="libbasisu.dylib" />
   </ItemGroup>

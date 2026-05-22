@@ -3,7 +3,7 @@
 `BasisUniversal.NET` is a .NET wrapper around Binomial's Basis Universal GPU
 texture codec.
 
-The project is split into three NuGet packages:
+The project is split into managed packages and native asset packages:
 
 - `BasisUniversal.NET` provides the high-level .NET API for common encode,
   inspect, and transcode workflows.
@@ -11,8 +11,11 @@ The project is split into three NuGet packages:
   method names follow the upstream `bu_*` and `bt_*` C API shape in C#
   PascalCase, such as `BuGetVersion` and `BtKtx2Open`. It binds directly to
   the upstream C API symbols exported by the native `basisu` library.
-- `BasisUniversal.Native` carries the native runtime binaries consumed by the
-  low-level bindings.
+- `BasisUniversal.Native` is the aggregate native runtime package consumed by
+  the low-level bindings.
+- `BasisUniversal.NativeAssets.Android`, `BasisUniversal.NativeAssets.iOS`, and
+  `BasisUniversal.NativeAssets.macOS` follow the SkiaSharp NativeAssets package
+  layout for platform-specific native assets.
 
 These packages are currently an early preview. Native runtime binaries are not
 yet fully distributed for every target platform, so users may need to build the
@@ -29,8 +32,8 @@ adapter packages such as `TextureCompressor.BasisUniversal`.
 - Transcode KTX2 image levels to Basis Universal's supported target formats,
   including RGBA32, ETC, BC1-5, BC7, PVRTC, ATC, FXT1, and ASTC targets where
   the source Basis texture format supports them.
-- Native library distribution is still being finalized. For now, expect to
-  compile the native shim yourself for your target runtime ID.
+- Native assets are currently packaged for Android, iOS, and macOS. Other
+  target platforms can be added with the same package layout.
 
 ## High-Level Example
 
@@ -138,22 +141,26 @@ Copy the produced native library into the matching NuGet runtime asset folder,
 for example:
 
 ```bash
-cp native/build/out/libbasisu.dylib runtimes/osx-arm64/native/
+cp native/build/out/libbasisu.dylib runtimes/osx/native/
 ```
 
-Desktop and Android native binaries can be added with the standard NuGet RID
-layout under `runtimes/{rid}/native/`, such as `runtimes/win-x64/native/`,
-`runtimes/linux-arm64/native/`, or `runtimes/android-arm64/native/`. iOS and
-browser WebAssembly are more constrained platforms and may need platform-specific
-build integration instead of a plain dynamically loaded native library. The
-native package can evolve to carry those assets or be split into platform
-packages later if that becomes cleaner.
+Desktop and Android native binaries use the standard NuGet RID layout under
+`runtimes/{rid}/native/`, such as `runtimes/osx/native/`,
+`runtimes/win-x64/native/`, `runtimes/linux-arm64/native/`, or
+`runtimes/android-arm64/native/`. iOS follows the SkiaSharp NativeAssets
+approach and packages signed frameworks under `runtimes/ios/native/` and
+`runtimes/iossimulator/native/`. Browser WebAssembly will need its own package
+shape because it is linked by the WebAssembly build toolchain rather than loaded
+as a normal native library.
 
 Then run:
 
 ```bash
 dotnet test BasisUniversal.NET.slnx
 dotnet pack src/BasisUniversal.Native/BasisUniversal.Native.csproj -c Release
+dotnet pack src/BasisUniversal.NativeAssets.Android/BasisUniversal.NativeAssets.Android.csproj -c Release
+dotnet pack src/BasisUniversal.NativeAssets.iOS/BasisUniversal.NativeAssets.iOS.csproj -c Release
+dotnet pack src/BasisUniversal.NativeAssets.macOS/BasisUniversal.NativeAssets.macOS.csproj -c Release
 dotnet pack src/BasisUniversal.NET.LowLevel/BasisUniversal.NET.LowLevel.csproj -c Release
 dotnet pack src/BasisUniversal.NET/BasisUniversal.NET.csproj -c Release
 ```

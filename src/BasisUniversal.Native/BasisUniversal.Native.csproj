@@ -11,16 +11,9 @@
     <PackageTags>basis;basis-universal;ktx2;texture-compression;gpu-textures;native</PackageTags>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <NuspecFile>BasisUniversal.Native.nuspec</NuspecFile>
+    <NuspecBasePath>$(MSBuildProjectDirectory)</NuspecBasePath>
     <NoWarn>$(NoWarn);NU5128</NoWarn>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Include="..\..\README.md" Pack="true" PackagePath="README.md" />
-    <None Include="..\..\THIRD-PARTY-NOTICES.md" Pack="true" PackagePath="THIRD-PARTY-NOTICES.md" />
-    <None Include="..\..\runtimes\**\*"
-          Exclude="..\..\runtimes\**\.DS_Store"
-          Pack="true"
-          PackagePath="runtimes\%(RecursiveDir)%(Filename)%(Extension)" />
-  </ItemGroup>
 
 </Project>

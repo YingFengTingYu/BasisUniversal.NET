@@ -1,6 +1,9 @@
 <Solution>
   <Folder Name="/src/">
     <Project Path="src/BasisUniversal.Native/BasisUniversal.Native.csproj" />
+    <Project Path="src/BasisUniversal.NativeAssets.Android/BasisUniversal.NativeAssets.Android.csproj" />
+    <Project Path="src/BasisUniversal.NativeAssets.iOS/BasisUniversal.NativeAssets.iOS.csproj" />
+    <Project Path="src/BasisUniversal.NativeAssets.macOS/BasisUniversal.NativeAssets.macOS.csproj" />
     <Project Path="src/BasisUniversal.NET.LowLevel/BasisUniversal.NET.LowLevel.csproj" />
     <Project Path="src/BasisUniversal.NET/BasisUniversal.NET.csproj" />
   </Folder>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>BasisUniversal.NativeAssets.iOS</id>
+    <version>1.0.0-preview.1</version>
+    <authors>BasisUniversal.NET</authors>
+    <license type="expression">Apache-2.0</license>
+    <readme>README.md</readme>
+    <description>iOS native framework assets for the Basis Universal GPU texture codec.</description>
+    <tags>basis basis-universal ktx2 texture-compression gpu-textures native ios</tags>
+    <dependencies>
+      <group targetFramework="net8.0-ios17.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\..\README.md" target="README.md" />
+    <file src="..\..\THIRD-PARTY-NOTICES.md" target="THIRD-PARTY-NOTICES.md" />
+    <file src="buildTransitive\net8.0-ios17.0\BasisUniversal.NativeAssets.iOS.targets" target="buildTransitive\net8.0-ios17.0\BasisUniversal.NativeAssets.iOS.targets" />
+    <file src="lib\net8.0-ios17.0\_._" target="lib\net8.0-ios17.0\_._" />
+    <file src="..\..\runtimes\ios\native\basisu.framework\Info.plist" target="runtimes\ios\native\basisu.framework\Info.plist" />
+    <file src="..\..\runtimes\ios\native\basisu.framework\basisu" target="runtimes\ios\native\basisu.framework\basisu" />
+    <file src="..\..\runtimes\ios\native\basisu.framework\_CodeSignature\CodeResources" target="runtimes\ios\native\basisu.framework\_CodeSignature\CodeResources" />
+    <file src="..\..\runtimes\iossimulator\native\basisu.framework\Info.plist" target="runtimes\iossimulator\native\basisu.framework\Info.plist" />
+    <file src="..\..\runtimes\iossimulator\native\basisu.framework\basisu" target="runtimes\iossimulator\native\basisu.framework\basisu" />
+    <file src="..\..\runtimes\iossimulator\native\basisu.framework\_CodeSignature\CodeResources" target="runtimes\iossimulator\native\basisu.framework\_CodeSignature\CodeResources" />
+  </files>
+</package>
