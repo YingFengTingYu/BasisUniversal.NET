@@ -1,8 +1,16 @@
 # BasisUniversal.NET
 
-`BasisUniversal.NET` is a thin .NET wrapper around Binomial's Basis Universal
-GPU texture codec. It exposes the upstream encoder/transcoder C API without
-taking a dependency on any higher-level texture library.
+`BasisUniversal.NET` is a .NET wrapper around Binomial's Basis Universal GPU
+texture codec.
+
+The project is split into two NuGet packages:
+
+- `BasisUniversal.NET` provides the high-level .NET API for common encode,
+  inspect, and transcode workflows.
+- `BasisUniversal.NET.LowLevel` provides lower-level bindings whose public
+  method names follow the upstream `bu_*` and `bt_*` C API shape in C#
+  PascalCase, such as `BuGetVersion` and `BtKtx2Open`. It binds directly to
+  the upstream C API symbols exported by the native `basisu` library.
 
 This package is currently an early preview. Native runtime binaries are not yet
 fully distributed for every target platform, so users may need to build the
@@ -22,9 +30,10 @@ adapter packages such as `TextureCompressor.BasisUniversal`.
 - Native library distribution is still being finalized. For now, expect to
   compile the native shim yourself for your target runtime ID.
 
-## Example
+## High-Level Example
 
 ```csharp
+using System.IO;
 using BasisUniversal;
 
 byte[] rgba32 = LoadRgba32Pixels();
@@ -41,30 +50,101 @@ byte[] ktx2 = BasisUniversalCodec.EncodeKtx2(
     });
 
 using var texture = BasisKtx2Texture.Open(ktx2);
+BasisKtx2Info info = texture.Info;
+BasisKtx2LevelInfo level = texture.GetLevelInfo();
+
 TranscodedImage bc7 = texture.TranscodeImageLevel(TranscoderTextureFormat.Bc7Rgba);
+
+byte[] rgba = new byte[BasisUniversalCodec.GetTranscodedImageSizeInBytes(
+    TranscoderTextureFormat.Rgba32,
+    level.OriginalWidth,
+    level.OriginalHeight)];
+int bytesWritten = texture.TranscodeImageLevel(rgba, TranscoderTextureFormat.Rgba32);
+```
+
+The high-level package also exposes format metadata helpers:
+
+```csharp
+bool supported = BasisUniversalCodec.IsTranscoderFormatSupported(
+    TranscoderTextureFormat.Bc7Rgba,
+    info.BasisTextureFormat);
+
+int blockBytes = BasisUniversalCodec.GetBytesPerBlockOrPixel(TranscoderTextureFormat.Bc7Rgba);
+bool hdr = BasisUniversalCodec.IsBasisTextureFormatHdr(info.BasisTextureFormat);
+```
+
+When the caller owns the output buffer or stream, the high-level API can write
+there directly:
+
+```csharp
+int estimatedKtx2Bytes = BasisUniversalCodec.EstimateMaxEncodedKtx2SizeInBytes(
+    width,
+    height);
+var encodedBuffer = new byte[estimatedKtx2Bytes];
+int encodedBytes = BasisUniversalCodec.EncodeKtx2(
+    rgba32,
+    width,
+    height,
+    encodedBuffer);
+
+bool ok = BasisUniversalCodec.TryEncodeKtx2(
+    rgba32,
+    width,
+    height,
+    encodedBuffer,
+    out encodedBytes,
+    out var requiredKtx2Bytes);
+
+using var encodedStream = new MemoryStream();
+long streamBytes = BasisUniversalCodec.EncodeKtx2(
+    rgba32,
+    width,
+    height,
+    encodedStream);
+
+using var decodedStream = new MemoryStream();
+int decodedBytes = texture.TranscodeImageLevel(
+    decodedStream,
+    TranscoderTextureFormat.Rgba32);
+```
+
+## Low-Level Example
+
+```csharp
+using BasisUniversal;
+using BasisUniversal.LowLevel;
+
+Basisu.EnsureInitialized();
+
+uint encoderVersion = Basisu.BuGetVersion();
+uint transcoderVersion = Basisu.BtGetVersion();
+uint supported = Basisu.BtBasisIsFormatSupported(
+    (uint)TranscoderTextureFormat.Bc7Rgba,
+    (uint)BasisTextureFormat.UastcLdr4x4);
 ```
 
 ## Native Build
 
-The native shim uses CMake and pins `BinomialLLC/basis_universal` to
+The native build uses CMake and pins `BinomialLLC/basis_universal` to
 `v2_1_0r` (`e4f439fc9545b6a9e1fd26fc7ffd0c682c4b96d4`).
 
 ```bash
 cmake -S native -B native/build -DCMAKE_BUILD_TYPE=Release
-cmake --build native/build --config Release --target basisu_net
+cmake --build native/build --config Release --target basisu_native
 ```
 
 Copy the produced native library into the matching NuGet runtime asset folder,
 for example:
 
 ```bash
-cp native/build/out/libbasisu_net.dylib runtimes/osx-arm64/native/
+cp native/build/out/libbasisu.dylib runtimes/osx-arm64/native/
 ```
 
 Then run:
 
 ```bash
 dotnet test BasisUniversal.NET.slnx
+dotnet pack src/BasisUniversal.NET.LowLevel/BasisUniversal.NET.LowLevel.csproj -c Release
 dotnet pack src/BasisUniversal.NET/BasisUniversal.NET.csproj -c Release
 ```
 
