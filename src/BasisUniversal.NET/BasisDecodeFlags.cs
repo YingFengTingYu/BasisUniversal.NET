@@ -1,6 +1,6 @@
 using System;
 
-namespace BasisUniversal.LowLevel;
+namespace BasisUniversal;
 
 [Flags]
 public enum BasisDecodeFlags : uint

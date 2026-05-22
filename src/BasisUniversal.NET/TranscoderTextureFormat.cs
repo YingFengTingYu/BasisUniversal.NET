@@ -1,4 +1,4 @@
-namespace BasisUniversal.LowLevel;
+namespace BasisUniversal;
 
 public enum TranscoderTextureFormat : uint
 {

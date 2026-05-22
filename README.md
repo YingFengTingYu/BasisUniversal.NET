@@ -111,7 +111,6 @@ int decodedBytes = texture.TranscodeImageLevel(
 ## Low-Level Example
 
 ```csharp
-using BasisUniversal;
 using BasisUniversal.LowLevel;
 
 Basisu.EnsureInitialized();

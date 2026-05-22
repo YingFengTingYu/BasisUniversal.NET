@@ -1,5 +1,7 @@
 using BasisUniversal;
-using BasisUniversal.LowLevel;
+using LowLevelBasisTextureFormat = BasisUniversal.LowLevel.BasisTextureFormat;
+using LowLevelBasisu = BasisUniversal.LowLevel.Basisu;
+using LowLevelTranscoderTextureFormat = BasisUniversal.LowLevel.TranscoderTextureFormat;
 
 namespace BasisUniversal.NET.Tests;
 
@@ -209,23 +211,23 @@ public sealed class BasisUniversalCodecTests
     [Fact]
     public void LowLevelPackage_ExposesRawBasisEntryPoints()
     {
-        Basisu.EnsureInitialized();
+        LowLevelBasisu.EnsureInitialized();
 
-        var parameters = Basisu.BuNewCompParams();
+        var parameters = LowLevelBasisu.BuNewCompParams();
         try
         {
-            Assert.NotEqual(0u, Basisu.BuGetVersion());
-            Assert.NotEqual(0u, Basisu.BtGetVersion());
+            Assert.NotEqual(0u, LowLevelBasisu.BuGetVersion());
+            Assert.NotEqual(0u, LowLevelBasisu.BtGetVersion());
             Assert.NotEqual(0UL, parameters);
-            Assert.NotEqual(0u, Basisu.BtBasisIsFormatSupported(
-                (uint)TranscoderTextureFormat.Bc7Rgba,
-                (uint)BasisTextureFormat.UastcLdr4x4));
+            Assert.NotEqual(0u, LowLevelBasisu.BtBasisIsFormatSupported(
+                (uint)LowLevelTranscoderTextureFormat.Bc7Rgba,
+                (uint)LowLevelBasisTextureFormat.UastcLdr4x4));
         }
         finally
         {
             if (parameters != 0)
             {
-                Basisu.BuDeleteCompParams(parameters);
+                LowLevelBasisu.BuDeleteCompParams(parameters);
             }
         }
     }
