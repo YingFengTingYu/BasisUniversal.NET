@@ -37,8 +37,15 @@ target_include_directories(basisu_native PRIVATE
 
 target_compile_definitions(basisu_native PRIVATE BASISD_SUPPORT_KTX2_ZSTD=1)
 
+if (MSVC)
+    target_compile_options(basisu_native PRIVATE /source-charset:.1252 /execution-charset:utf-8)
+endif()
+
 if (TARGET basisu_encoder)
     target_compile_definitions(basisu_encoder PRIVATE BASISD_SUPPORT_KTX2_ZSTD=1)
+    if (MSVC)
+        target_compile_options(basisu_encoder PRIVATE /source-charset:.1252 /execution-charset:utf-8)
+    endif()
     target_link_libraries(basisu_native PRIVATE basisu_encoder)
 endif()
 
