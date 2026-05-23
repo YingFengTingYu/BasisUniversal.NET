@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <PackageId>BasisUniversal.Native</PackageId>
-    <Version>1.0.0-preview.2</Version>
+    <Version>1.0.0-preview.3</Version>
     <Authors>BasisUniversal.NET</Authors>
     <Description>Native runtime binaries for the Basis Universal GPU texture codec.</Description>
     <PackageTags>basis;basis-universal;ktx2;texture-compression;gpu-textures;native</PackageTags>
@@ -16,6 +16,8 @@
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <NoWarn>$(NoWarn);NU5128</NoWarn>
+    <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);_BasisUniversalRuntimePackageFiles</TargetsForTfmSpecificContentInPackage>
+    <_BasisUniversalRepoRoot>$([System.IO.Path]::GetFullPath('$(MSBuildProjectDirectory)/../..'))</_BasisUniversalRepoRoot>
     <_BasisUniversalHostRuntime Condition=" '$(RuntimeIdentifier)' != '' ">$(RuntimeIdentifier)</_BasisUniversalHostRuntime>
     <_BasisUniversalHostRuntime Condition=" '$(_BasisUniversalHostRuntime)' == '' and '$(NETCoreSdkRuntimeIdentifier)' != '' ">$(NETCoreSdkRuntimeIdentifier)</_BasisUniversalHostRuntime>
     <_BasisUniversalHostRuntime Condition=" $([System.String]::Copy('$(_BasisUniversalHostRuntime)').StartsWith('osx-')) ">osx</_BasisUniversalHostRuntime>
@@ -24,25 +26,30 @@
   <ItemGroup>
     <None Include="..\..\README.md" Pack="true" PackagePath="README.md" />
     <None Include="..\..\THIRD-PARTY-NOTICES.md" Pack="true" PackagePath="THIRD-PARTY-NOTICES.md" />
-    <None Include="lib\**\*" Pack="true" PackagePath="lib\%(RecursiveDir)%(Filename)%(Extension)" />
-    <None Include="buildTransitive\**\*" Pack="true" PackagePath="buildTransitive\%(RecursiveDir)%(Filename)%(Extension)" />
-    <None Include="..\..\runtimes\**\*" Pack="true" PackagePath="runtimes\%(RecursiveDir)%(Filename)%(Extension)" />
+    <None Include="lib/**/*" Pack="true" PackagePath="lib/%(RecursiveDir)%(Filename)%(Extension)" />
+    <None Include="buildTransitive/**/*" Pack="true" PackagePath="buildTransitive/%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(ShouldIncludeNativeBasisUniversal)' != 'False' ">
-    <Content Include="..\..\runtimes\**\native\**\*" Pack="false">
-      <Link>runtimes\%(RecursiveDir)%(Filename)%(Extension)</Link>
-      <TargetPath>runtimes\%(RecursiveDir)%(Filename)%(Extension)</TargetPath>
+    <None Include="$(_BasisUniversalRepoRoot)/runtimes/**/native/**/*" Exclude="$(_BasisUniversalRepoRoot)/runtimes/**/.DS_Store" Pack="false">
+      <Link>%(Filename)%(Extension)</Link>
+      <TargetPath>runtimes/%(RecursiveDir)%(Filename)%(Extension)</TargetPath>
       <Visible>False</Visible>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </None>
 
-    <Content Include="..\..\runtimes\$(_BasisUniversalHostRuntime)\native\**\*" Condition=" '$(_BasisUniversalHostRuntime)' != '' " Pack="false">
+    <None Include="../../runtimes/$(_BasisUniversalHostRuntime)/native/**/*" Condition=" '$(_BasisUniversalHostRuntime)' != '' " Pack="false">
       <Link>%(Filename)%(Extension)</Link>
       <TargetPath>%(Filename)%(Extension)</TargetPath>
       <Visible>False</Visible>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </None>
   </ItemGroup>
+
+  <Target Name="_BasisUniversalRuntimePackageFiles">
+    <ItemGroup>
+      <TfmSpecificPackageFile Include="$(_BasisUniversalRepoRoot)/runtimes/**/native/**/*" Exclude="$(_BasisUniversalRepoRoot)/runtimes/**/.DS_Store" PackagePath="runtimes/%(RecursiveDir)" />
+    </ItemGroup>
+  </Target>
 
 </Project>
