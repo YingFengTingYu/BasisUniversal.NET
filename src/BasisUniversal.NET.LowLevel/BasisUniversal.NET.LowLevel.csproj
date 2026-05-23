@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <PackageId>BasisUniversal.NET.LowLevel</PackageId>
-    <Version>1.0.0-preview.1</Version>
+    <Version>1.0.0-preview.2</Version>
     <Description>Low-level .NET bindings for the Basis Universal encoder and transcoder C API.</Description>
     <PackageTags>basis;basis-universal;ktx2;texture-compression;gpu-textures;native-bindings</PackageTags>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>

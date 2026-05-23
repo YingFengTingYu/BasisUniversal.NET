@@ -18,6 +18,14 @@
       <Visible>False</Visible>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+
+    <_NativeBasisUniversalFile Include="$(MSBuildThisFileDirectory)..\..\runtimes\osx\native\libbasisu*.dylib" />
+
+    <None Include="@(_NativeBasisUniversalFile)" Condition=" '%(_NativeBasisUniversalFile.Extension)' == '.dylib' ">
+      <Link>%(Dir)%(Filename)%(Extension)</Link>
+      <Visible>False</Visible>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

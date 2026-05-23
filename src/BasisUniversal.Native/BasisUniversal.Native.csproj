@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <PackageId>BasisUniversal.Native</PackageId>
-    <Version>1.0.0-preview.1</Version>
+    <Version>1.0.0-preview.2</Version>
     <Description>Native runtime binaries for the Basis Universal GPU texture codec.</Description>
     <PackageTags>basis;basis-universal;ktx2;texture-compression;gpu-textures;native</PackageTags>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>

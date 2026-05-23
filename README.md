@@ -3,7 +3,7 @@
 `BasisUniversal.NET` is a .NET wrapper around Binomial's Basis Universal GPU
 texture codec.
 
-The project is split into managed packages and native asset packages:
+The project is split into managed packages and one native asset package:
 
 - `BasisUniversal.NET` provides the high-level .NET API for common encode,
   inspect, and transcode workflows.
@@ -12,10 +12,7 @@ The project is split into managed packages and native asset packages:
   PascalCase, such as `BuGetVersion` and `BtKtx2Open`. It binds directly to
   the upstream C API symbols exported by the native `basisu` library.
 - `BasisUniversal.Native` is the aggregate native runtime package consumed by
-  the low-level bindings.
-- `BasisUniversal.NativeAssets.Android`, `BasisUniversal.NativeAssets.iOS`,
-  `BasisUniversal.NativeAssets.Linux`, and `BasisUniversal.NativeAssets.macOS`
-  follow the SkiaSharp NativeAssets package layout for platform-specific native
+  the low-level bindings. It contains all Android, iOS, Linux, and macOS native
   assets.
 
 These packages are currently an early preview. Native runtime binaries are not
@@ -147,8 +144,8 @@ scripts/build-native.sh macos ios android linux
 Desktop and Android native binaries use the standard NuGet RID layout under
 `runtimes/{rid}/native/`, such as `runtimes/osx/native/`,
 `runtimes/win-x64/native/`, `runtimes/linux-arm64/native/`, or
-`runtimes/android-arm64/native/`. iOS follows the SkiaSharp NativeAssets
-approach and packages signed frameworks under `runtimes/ios/native/` and
+`runtimes/android-arm64/native/`. iOS follows the native framework asset
+layout and packages signed frameworks under `runtimes/ios/native/` and
 `runtimes/iossimulator/native/`. Browser WebAssembly will need its own package
 shape because it is linked by the WebAssembly build toolchain rather than loaded
 as a normal native library.
@@ -162,10 +159,6 @@ Then run:
 ```bash
 dotnet test BasisUniversal.NET.slnx
 dotnet pack src/BasisUniversal.Native/BasisUniversal.Native.csproj -c Release
-dotnet pack src/BasisUniversal.NativeAssets.Android/BasisUniversal.NativeAssets.Android.csproj -c Release
-dotnet pack src/BasisUniversal.NativeAssets.iOS/BasisUniversal.NativeAssets.iOS.csproj -c Release
-dotnet pack src/BasisUniversal.NativeAssets.Linux/BasisUniversal.NativeAssets.Linux.csproj -c Release
-dotnet pack src/BasisUniversal.NativeAssets.macOS/BasisUniversal.NativeAssets.macOS.csproj -c Release
 dotnet pack src/BasisUniversal.NET.LowLevel/BasisUniversal.NET.LowLevel.csproj -c Release
 dotnet pack src/BasisUniversal.NET/BasisUniversal.NET.csproj -c Release
 ```
