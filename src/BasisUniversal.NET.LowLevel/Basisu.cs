@@ -1,10 +1,13 @@
 using System;
 using System.Runtime.InteropServices;
+#if NET8_0_OR_GREATER
+using System.Runtime.CompilerServices;
+#endif
 using System.Threading;
 
 namespace BasisUniversal.LowLevel;
 
-public static unsafe class Basisu
+public static unsafe partial class Basisu
 {
     private const string LibraryName = "basisu";
     private static readonly object s_initLock = new object();
@@ -279,36 +282,107 @@ public static unsafe class Basisu
             channel1,
             stateHandle);
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bu_get_version();
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bu_get_version();
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial void bu_enable_debug_printf(uint flag);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern void bu_enable_debug_printf(uint flag);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial void bu_init();
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern void bu_init();
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial ulong bu_alloc(ulong size);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern ulong bu_alloc(ulong size);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial void bu_free(ulong ofs);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern void bu_free(ulong ofs);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial ulong bu_new_comp_params();
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern ulong bu_new_comp_params();
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bu_delete_comp_params(ulong paramsOfs);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bu_delete_comp_params(ulong paramsOfs);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial ulong bu_comp_params_get_comp_data_size(ulong paramsOfs);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern ulong bu_comp_params_get_comp_data_size(ulong paramsOfs);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial ulong bu_comp_params_get_comp_data_ofs(ulong paramsOfs);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern ulong bu_comp_params_get_comp_data_ofs(ulong paramsOfs);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bu_comp_params_clear(ulong paramsOfs);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bu_comp_params_clear(ulong paramsOfs);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bu_comp_params_set_image_rgba32(
+        ulong paramsOfs,
+        uint imageIndex,
+        ulong imageDataOfs,
+        uint width,
+        uint height,
+        uint pitchInBytes);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bu_comp_params_set_image_rgba32(
         ulong paramsOfs,
@@ -317,7 +391,19 @@ public static unsafe class Basisu
         uint width,
         uint height,
         uint pitchInBytes);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bu_comp_params_set_image_float_rgba(
+        ulong paramsOfs,
+        uint imageIndex,
+        ulong imageDataOfs,
+        uint width,
+        uint height,
+        uint pitchInBytes);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bu_comp_params_set_image_float_rgba(
         ulong paramsOfs,
@@ -326,7 +412,19 @@ public static unsafe class Basisu
         uint width,
         uint height,
         uint pitchInBytes);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bu_compress_texture(
+        ulong paramsOfs,
+        uint desiredBasisTextureFormat,
+        int qualityLevel,
+        int effortLevel,
+        ulong flagsAndQuality,
+        float lowLevelUastcRdoOrDctQuality);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bu_compress_texture(
         ulong paramsOfs,
@@ -335,202 +433,608 @@ public static unsafe class Basisu
         int effortLevel,
         ulong flagsAndQuality,
         float lowLevelUastcRdoOrDctQuality);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_get_version();
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_get_version();
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial void bt_enable_debug_printf(uint flag);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern void bt_enable_debug_printf(uint flag);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial void bt_init();
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern void bt_init();
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial ulong bt_alloc(ulong size);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern ulong bt_alloc(ulong size);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial void bt_free(ulong ofs);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern void bt_free(ulong ofs);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_basis_tex_format_is_xuastc_ldr(uint basisTexFormat);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_basis_tex_format_is_xuastc_ldr(uint basisTexFormat);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_basis_tex_format_is_astc_ldr(uint basisTexFormat);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_basis_tex_format_is_astc_ldr(uint basisTexFormat);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_basis_tex_format_get_block_width(uint basisTexFormat);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_basis_tex_format_get_block_width(uint basisTexFormat);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_basis_tex_format_get_block_height(uint basisTexFormat);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_basis_tex_format_get_block_height(uint basisTexFormat);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_basis_tex_format_is_hdr(uint basisTexFormat);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_basis_tex_format_is_hdr(uint basisTexFormat);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_basis_tex_format_is_ldr(uint basisTexFormat);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_basis_tex_format_is_ldr(uint basisTexFormat);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_basis_get_bytes_per_block_or_pixel(uint transcoderTextureFormat);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_basis_get_bytes_per_block_or_pixel(uint transcoderTextureFormat);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_basis_transcoder_format_has_alpha(uint transcoderTextureFormat);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_basis_transcoder_format_has_alpha(uint transcoderTextureFormat);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_basis_transcoder_format_is_hdr(uint transcoderTextureFormat);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_basis_transcoder_format_is_hdr(uint transcoderTextureFormat);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_basis_transcoder_format_is_ldr(uint transcoderTextureFormat);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_basis_transcoder_format_is_ldr(uint transcoderTextureFormat);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_basis_transcoder_texture_format_is_astc(uint transcoderTextureFormat);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_basis_transcoder_texture_format_is_astc(uint transcoderTextureFormat);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_basis_transcoder_format_is_uncompressed(uint transcoderTextureFormat);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_basis_transcoder_format_is_uncompressed(uint transcoderTextureFormat);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_basis_get_uncompressed_bytes_per_pixel(uint transcoderTextureFormat);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_basis_get_uncompressed_bytes_per_pixel(uint transcoderTextureFormat);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_basis_get_block_width(uint transcoderTextureFormat);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_basis_get_block_width(uint transcoderTextureFormat);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_basis_get_block_height(uint transcoderTextureFormat);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_basis_get_block_height(uint transcoderTextureFormat);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_basis_get_transcoder_texture_format_from_basis_tex_format(uint basisTexFormat);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_basis_get_transcoder_texture_format_from_basis_tex_format(uint basisTexFormat);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_basis_is_format_supported(uint transcoderTextureFormat, uint basisTextureFormat);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_basis_is_format_supported(uint transcoderTextureFormat, uint basisTextureFormat);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_basis_compute_transcoded_image_size_in_bytes(
+        uint transcoderTextureFormat,
+        uint origWidth,
+        uint origHeight);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_basis_compute_transcoded_image_size_in_bytes(
         uint transcoderTextureFormat,
         uint origWidth,
         uint origHeight);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial ulong bt_ktx2_open(ulong dataMemOfs, uint dataLen);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern ulong bt_ktx2_open(ulong dataMemOfs, uint dataLen);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial void bt_ktx2_close(ulong handle);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern void bt_ktx2_close(ulong handle);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_ktx2_get_width(ulong handle);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_ktx2_get_width(ulong handle);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_ktx2_get_height(ulong handle);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_ktx2_get_height(ulong handle);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_ktx2_get_levels(ulong handle);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_ktx2_get_levels(ulong handle);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_ktx2_get_faces(ulong handle);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_ktx2_get_faces(ulong handle);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_ktx2_get_layers(ulong handle);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_ktx2_get_layers(ulong handle);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_ktx2_get_basis_tex_format(ulong handle);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_ktx2_get_basis_tex_format(ulong handle);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_ktx2_is_etc1s(ulong handle);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_ktx2_is_etc1s(ulong handle);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_ktx2_is_uastc_ldr_4x4(ulong handle);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_ktx2_is_uastc_ldr_4x4(ulong handle);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_ktx2_is_hdr(ulong handle);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_ktx2_is_hdr(ulong handle);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_ktx2_is_hdr_4x4(ulong handle);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_ktx2_is_hdr_4x4(ulong handle);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_ktx2_is_hdr_6x6(ulong handle);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_ktx2_is_hdr_6x6(ulong handle);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_ktx2_is_ldr(ulong handle);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_ktx2_is_ldr(ulong handle);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_ktx2_is_astc_ldr(ulong handle);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_ktx2_is_astc_ldr(ulong handle);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_ktx2_is_xuastc_ldr(ulong handle);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_ktx2_is_xuastc_ldr(ulong handle);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_ktx2_get_block_width(ulong handle);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_ktx2_get_block_width(ulong handle);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_ktx2_get_block_height(ulong handle);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_ktx2_get_block_height(ulong handle);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_ktx2_has_alpha(ulong handle);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_ktx2_has_alpha(ulong handle);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_ktx2_get_dfd_color_model(ulong handle);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_ktx2_get_dfd_color_model(ulong handle);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_ktx2_get_dfd_color_primaries(ulong handle);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_ktx2_get_dfd_color_primaries(ulong handle);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_ktx2_get_dfd_transfer_func(ulong handle);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_ktx2_get_dfd_transfer_func(ulong handle);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_ktx2_is_srgb(ulong handle);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_ktx2_is_srgb(ulong handle);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_ktx2_get_dfd_flags(ulong handle);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_ktx2_get_dfd_flags(ulong handle);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_ktx2_get_dfd_total_samples(ulong handle);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_ktx2_get_dfd_total_samples(ulong handle);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_ktx2_get_dfd_channel_id0(ulong handle);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_ktx2_get_dfd_channel_id0(ulong handle);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_ktx2_get_dfd_channel_id1(ulong handle);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_ktx2_get_dfd_channel_id1(ulong handle);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_ktx2_is_video(ulong handle);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_ktx2_is_video(ulong handle);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial float bt_ktx2_get_ldr_hdr_upconversion_nit_multiplier(ulong handle);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern float bt_ktx2_get_ldr_hdr_upconversion_nit_multiplier(ulong handle);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_ktx2_get_level_orig_width(ulong handle, uint levelIndex, uint layerIndex, uint faceIndex);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_ktx2_get_level_orig_width(ulong handle, uint levelIndex, uint layerIndex, uint faceIndex);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_ktx2_get_level_orig_height(ulong handle, uint levelIndex, uint layerIndex, uint faceIndex);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_ktx2_get_level_orig_height(ulong handle, uint levelIndex, uint layerIndex, uint faceIndex);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_ktx2_get_level_actual_width(ulong handle, uint levelIndex, uint layerIndex, uint faceIndex);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_ktx2_get_level_actual_width(ulong handle, uint levelIndex, uint layerIndex, uint faceIndex);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_ktx2_get_level_actual_height(ulong handle, uint levelIndex, uint layerIndex, uint faceIndex);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_ktx2_get_level_actual_height(ulong handle, uint levelIndex, uint layerIndex, uint faceIndex);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_ktx2_get_level_num_blocks_x(ulong handle, uint levelIndex, uint layerIndex, uint faceIndex);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_ktx2_get_level_num_blocks_x(ulong handle, uint levelIndex, uint layerIndex, uint faceIndex);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_ktx2_get_level_num_blocks_y(ulong handle, uint levelIndex, uint layerIndex, uint faceIndex);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_ktx2_get_level_num_blocks_y(ulong handle, uint levelIndex, uint layerIndex, uint faceIndex);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_ktx2_get_level_total_blocks(ulong handle, uint levelIndex, uint layerIndex, uint faceIndex);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_ktx2_get_level_total_blocks(ulong handle, uint levelIndex, uint layerIndex, uint faceIndex);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_ktx2_get_level_alpha_flag(ulong handle, uint levelIndex, uint layerIndex, uint faceIndex);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_ktx2_get_level_alpha_flag(ulong handle, uint levelIndex, uint layerIndex, uint faceIndex);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_ktx2_get_level_iframe_flag(ulong handle, uint levelIndex, uint layerIndex, uint faceIndex);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_ktx2_get_level_iframe_flag(ulong handle, uint levelIndex, uint layerIndex, uint faceIndex);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_ktx2_start_transcoding(ulong handle);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_ktx2_start_transcoding(ulong handle);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial ulong bt_ktx2_create_transcode_state();
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern ulong bt_ktx2_create_transcode_state();
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial void bt_ktx2_destroy_transcode_state(ulong handle);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern void bt_ktx2_destroy_transcode_state(ulong handle);
+#endif
 
+#if NET8_0_OR_GREATER
+    [LibraryImport(LibraryName)]
+    [UnmanagedCallConv(CallConvs = new[] { typeof(CallConvCdecl) })]
+    private static partial uint bt_ktx2_transcode_image_level(
+        ulong ktx2Handle,
+        uint levelIndex,
+        uint layerIndex,
+        uint faceIndex,
+        ulong outputBlockMemOfs,
+        uint outputBlocksBufSizeInBlocksOrPixels,
+        uint transcoderTextureFormat,
+        uint decodeFlags,
+        uint outputRowPitchInBlocksOrPixels,
+        uint outputRowsInPixels,
+        int channel0,
+        int channel1,
+        ulong stateHandle);
+#else
     [DllImport(LibraryName, CallingConvention = CallingConvention.Cdecl)]
     private static extern uint bt_ktx2_transcode_image_level(
         ulong ktx2Handle,
@@ -546,4 +1050,5 @@ public static unsafe class Basisu
         int channel0,
         int channel1,
         ulong stateHandle);
+#endif
 }
