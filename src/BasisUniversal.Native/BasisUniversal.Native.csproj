@@ -16,6 +16,9 @@
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <NoWarn>$(NoWarn);NU5128</NoWarn>
+    <_BasisUniversalHostRuntime Condition=" '$(RuntimeIdentifier)' != '' ">$(RuntimeIdentifier)</_BasisUniversalHostRuntime>
+    <_BasisUniversalHostRuntime Condition=" '$(_BasisUniversalHostRuntime)' == '' and '$(NETCoreSdkRuntimeIdentifier)' != '' ">$(NETCoreSdkRuntimeIdentifier)</_BasisUniversalHostRuntime>
+    <_BasisUniversalHostRuntime Condition=" $([System.String]::Copy('$(_BasisUniversalHostRuntime)').StartsWith('osx-')) ">osx</_BasisUniversalHostRuntime>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,22 +26,23 @@
     <None Include="..\..\THIRD-PARTY-NOTICES.md" Pack="true" PackagePath="THIRD-PARTY-NOTICES.md" />
     <None Include="lib\**\*" Pack="true" PackagePath="lib\%(RecursiveDir)%(Filename)%(Extension)" />
     <None Include="buildTransitive\**\*" Pack="true" PackagePath="buildTransitive\%(RecursiveDir)%(Filename)%(Extension)" />
-    <None Include="..\..\runtimes\android-arm\native\libbasisu.so" Pack="true" PackagePath="runtimes\android-arm\native\libbasisu.so" />
-    <None Include="..\..\runtimes\android-arm64\native\libbasisu.so" Pack="true" PackagePath="runtimes\android-arm64\native\libbasisu.so" />
-    <None Include="..\..\runtimes\android-x64\native\libbasisu.so" Pack="true" PackagePath="runtimes\android-x64\native\libbasisu.so" />
-    <None Include="..\..\runtimes\android-x86\native\libbasisu.so" Pack="true" PackagePath="runtimes\android-x86\native\libbasisu.so" />
-    <None Include="..\..\runtimes\linux-arm64\native\libbasisu.so" Pack="true" PackagePath="runtimes\linux-arm64\native\libbasisu.so" />
-    <None Include="..\..\runtimes\linux-x64\native\libbasisu.so" Pack="true" PackagePath="runtimes\linux-x64\native\libbasisu.so" />
-    <None Include="..\..\runtimes\osx\native\libbasisu.dylib" Pack="true" PackagePath="runtimes\osx\native\libbasisu.dylib" />
-    <None Include="..\..\runtimes\ios\native\basisu.framework\Info.plist" Pack="true" PackagePath="runtimes\ios\native\basisu.framework\Info.plist" />
-    <None Include="..\..\runtimes\ios\native\basisu.framework\basisu" Pack="true" PackagePath="runtimes\ios\native\basisu.framework\" />
-    <None Include="..\..\runtimes\ios\native\basisu.framework\_CodeSignature\CodeResources" Pack="true" PackagePath="runtimes\ios\native\basisu.framework\_CodeSignature\" />
-    <None Include="..\..\runtimes\iossimulator\native\basisu.framework\Info.plist" Pack="true" PackagePath="runtimes\iossimulator\native\basisu.framework\Info.plist" />
-    <None Include="..\..\runtimes\iossimulator\native\basisu.framework\basisu" Pack="true" PackagePath="runtimes\iossimulator\native\basisu.framework\" />
-    <None Include="..\..\runtimes\iossimulator\native\basisu.framework\_CodeSignature\CodeResources" Pack="true" PackagePath="runtimes\iossimulator\native\basisu.framework\_CodeSignature\" />
-    <None Include="..\..\runtimes\win-x64\native\basisu.dll" Condition="Exists('..\..\runtimes\win-x64\native\basisu.dll')" Pack="true" PackagePath="runtimes\win-x64\native\basisu.dll" />
-    <None Include="..\..\runtimes\win-x86\native\basisu.dll" Condition="Exists('..\..\runtimes\win-x86\native\basisu.dll')" Pack="true" PackagePath="runtimes\win-x86\native\basisu.dll" />
-    <None Include="..\..\runtimes\win-arm64\native\basisu.dll" Condition="Exists('..\..\runtimes\win-arm64\native\basisu.dll')" Pack="true" PackagePath="runtimes\win-arm64\native\basisu.dll" />
+    <None Include="..\..\runtimes\**\*" Pack="true" PackagePath="runtimes\%(RecursiveDir)%(Filename)%(Extension)" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(ShouldIncludeNativeBasisUniversal)' != 'False' ">
+    <Content Include="..\..\runtimes\**\native\**\*" Pack="false">
+      <Link>runtimes\%(RecursiveDir)%(Filename)%(Extension)</Link>
+      <TargetPath>runtimes\%(RecursiveDir)%(Filename)%(Extension)</TargetPath>
+      <Visible>False</Visible>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+
+    <Content Include="..\..\runtimes\$(_BasisUniversalHostRuntime)\native\**\*" Condition=" '$(_BasisUniversalHostRuntime)' != '' " Pack="false">
+      <Link>%(Filename)%(Extension)</Link>
+      <TargetPath>%(Filename)%(Extension)</TargetPath>
+      <Visible>False</Visible>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

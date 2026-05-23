@@ -3,29 +3,23 @@
 
   <PropertyGroup>
     <ShouldIncludeNativeBasisUniversal Condition=" '$(ShouldIncludeNativeBasisUniversal)' == '' ">True</ShouldIncludeNativeBasisUniversal>
+    <_BasisUniversalHostRuntime Condition=" '$(RuntimeIdentifier)' != '' ">$(RuntimeIdentifier)</_BasisUniversalHostRuntime>
+    <_BasisUniversalHostRuntime Condition=" '$(_BasisUniversalHostRuntime)' == '' and '$(NETCoreSdkRuntimeIdentifier)' != '' ">$(NETCoreSdkRuntimeIdentifier)</_BasisUniversalHostRuntime>
+    <_BasisUniversalHostRuntime Condition=" $([System.String]::Copy('$(_BasisUniversalHostRuntime)').StartsWith('osx-')) ">osx</_BasisUniversalHostRuntime>
   </PropertyGroup>
 
   <ItemGroup Condition=" '$(ShouldIncludeNativeBasisUniversal)' != 'False' ">
-    <_NativeBasisUniversalFile Include="$(MSBuildThisFileDirectory)..\..\runtimes\linux-x64\native\libbasisu*.so">
-      <Dir>x64\</Dir>
-    </_NativeBasisUniversalFile>
-    <_NativeBasisUniversalFile Include="$(MSBuildThisFileDirectory)..\..\runtimes\linux-arm64\native\libbasisu*.so">
-      <Dir>arm64\</Dir>
-    </_NativeBasisUniversalFile>
-
-    <Content Include="@(_NativeBasisUniversalFile)">
-      <Link>%(Dir)%(Filename)%(Extension)</Link>
+    <Content Include="$(MSBuildThisFileDirectory)..\..\runtimes\**\native\**\*">
+      <Link>runtimes\%(RecursiveDir)%(Filename)%(Extension)</Link>
       <Visible>False</Visible>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
 
-    <_NativeBasisUniversalFile Include="$(MSBuildThisFileDirectory)..\..\runtimes\osx\native\libbasisu*.dylib" />
-
-    <None Include="@(_NativeBasisUniversalFile)" Condition=" '%(_NativeBasisUniversalFile.Extension)' == '.dylib' ">
-      <Link>%(Dir)%(Filename)%(Extension)</Link>
+    <Content Include="$(MSBuildThisFileDirectory)..\..\runtimes\$(_BasisUniversalHostRuntime)\native\**\*" Condition=" '$(_BasisUniversalHostRuntime)' != '' ">
+      <Link>%(Filename)%(Extension)</Link>
       <Visible>False</Visible>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
 
 </Project>

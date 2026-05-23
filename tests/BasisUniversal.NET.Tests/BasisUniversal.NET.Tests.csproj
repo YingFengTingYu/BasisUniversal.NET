@@ -22,12 +22,4 @@
     <ProjectReference Include="..\..\src\BasisUniversal.NET.LowLevel\BasisUniversal.NET.LowLevel.csproj" />
     <ProjectReference Include="..\..\src\BasisUniversal.NET\BasisUniversal.NET.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <None Include="..\..\runtimes\osx\native\libbasisu.dylib"
-          Condition="Exists('..\..\runtimes\osx\native\libbasisu.dylib')"
-          CopyToOutputDirectory="PreserveNewest"
-          Link="libbasisu.dylib" />
-  </ItemGroup>
-
 </Project>
