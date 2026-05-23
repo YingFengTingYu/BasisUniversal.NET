@@ -141,6 +141,12 @@ For repeatable builds, use the native build script:
 scripts/build-native.sh macos ios android linux
 ```
 
+On Windows, use the PowerShell/MSVC build script:
+
+```powershell
+scripts/build-native-windows.ps1 -Target all
+```
+
 Desktop and Android native binaries use the standard NuGet RID layout under
 `runtimes/{rid}/native/`, such as `runtimes/osx/native/`,
 `runtimes/win-x64/native/`, `runtimes/linux-arm64/native/`, or
@@ -152,7 +158,9 @@ as a normal native library.
 
 The Linux target uses Docker manylinux2014 images to produce `linux-x64` and
 `linux-arm64` binaries. The Android target uses the local Android NDK discovered
-from `ANDROID_NDK_HOME`, `ANDROID_NDK_ROOT`, or `ANDROID_HOME`.
+from `ANDROID_NDK_HOME`, `ANDROID_NDK_ROOT`, or `ANDROID_HOME`. The Windows
+target uses CMake with the Visual Studio 2022 generator to produce `win-x64`,
+`win-x86`, and `win-arm64` DLLs.
 
 Then run:
 

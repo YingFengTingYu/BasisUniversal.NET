@@ -7,8 +7,12 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <PackageId>BasisUniversal.NET</PackageId>
     <Version>1.0.0-preview.2</Version>
+    <Authors>BasisUniversal.NET</Authors>
     <Description>High-level .NET wrapper for the Basis Universal GPU texture codec encoder and transcoder.</Description>
     <PackageTags>basis;basis-universal;ktx2;texture-compression;gpu-textures</PackageTags>
+    <PackageProjectUrl>https://github.com/YingFengTingYu/BasisUniversal.NET</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/YingFengTingYu/BasisUniversal.NET</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
